@@ -10,6 +10,6 @@ class StairsScreenStylesheet < ApplicationStylesheet
   end
 
   def root_view(st)
-    st.background_color = color.white
+    st.background_color = color.black
   end
 end
