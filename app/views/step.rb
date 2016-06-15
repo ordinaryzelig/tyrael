@@ -21,18 +21,35 @@ class Step < PM::TableViewCell
   end
 
   def on
-    find(tag_name).animate(
-      duration: 2,
-      animations: -> (q) {
-        q.style { |st| st.opacity = (0..10).to_a.sample * 0.1 }
-      },
-    )
+    animate_enlighten
   end
 
 private
 
   def tag_name
     :"step_idx_#{step_idx}"
+  end
+
+  def animate_random_opacity
+    find(tag_name).animate(
+      duration: 2,
+      animations: -> (q) {
+          q.style do |st|
+            st.opacity = (0..10).to_a.sample * 0.1
+          end
+        }
+    )
+  end
+
+  def animate_enlighten
+    find(tag_name).animate(
+      duration: 0.5,
+      animations: -> (q) {
+          q.style do |st|
+            st.opacity = 1
+          end
+        }
+    )
   end
 
 end
