@@ -12,7 +12,8 @@ class StairsScreen < PM::TableScreen
           cell_class: Step,
           height: StepStylesheet::STEP_HEIGHT,
           action: :step_on,
-          arguments: {step_idx: idx}
+          arguments: {step_idx: idx},
+          selection_style: :none,
         }
       end
     }]
