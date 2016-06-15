@@ -3,7 +3,6 @@ class Step < PM::TableViewCell
   attr_accessor :step_idx
 
   def on_load
-    mp tag_name
     apply_style :step
 
     content = find(self.contentView)
