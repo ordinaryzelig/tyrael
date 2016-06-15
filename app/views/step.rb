@@ -6,18 +6,18 @@ class Step < PM::TableViewCell
     apply_style :step
 
     content = find(self.contentView)
-    @lights =
-      20.times.map do |idx|
-        label =
-          content
-            .append(UILabel, :led)
-            .tag(tag_name)
-            .get
-        label.style do |st|
-          st.frame = {l: idx * StepStylesheet::STEP_HEIGHT}
-        end
-        label
+    20.times.map do |idx|
+      label =
+        content
+          .append(UILabel, :led)
+          .tag(tag_name)
+          .get
+      label.style do |st|
+        st.frame = {l: idx * StepStylesheet::STEP_HEIGHT}
       end
+      label
+    end
+    @leds = find(tag_name)
   end
 
   def on
@@ -42,14 +42,31 @@ private
   end
 
   def animate_enlighten
-    find(tag_name).animate(
-      duration: 0.5,
-      animations: -> (q) {
-          q.style do |st|
-            st.opacity = 1
-          end
-        }
-    )
+    leds_from_middle_outward.each_with_index do |leds, idx|
+      leds.each do |led|
+        led.animate(
+          duration: 0.5,
+          delay: 0.03 * idx,
+          animations: -> (q) {
+            q.style do |st|
+              st.opacity = 1
+            end
+          },
+        )
+      end
+    end
+  end
+
+  def leds_from_middle_outward
+    half = @leds.size / 2
+    middle = @leds.size.even? ? [] : [[@leds[half]]]
+    middle +
+      half.times.map do |idx|
+        [
+          @leds[half - idx - 1],
+          @leds[-(half - idx)],
+        ]
+      end
   end
 
 end
