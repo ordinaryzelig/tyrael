@@ -14,13 +14,13 @@ module StepStylesheet
 
   def step(st)
     st.frame = {h: STEP_HEIGHT}
+    st.background_color = color.black
   end
 
   def led(st)
     st.frame = {h: STEP_HEIGHT, w: STEP_HEIGHT}
-    st.font = font.medium
-    st.background_color = color.light_gray
-    st.color = color.black
+    st.background_color = color.white
+    st.opacity = 0
   end
 
 end
