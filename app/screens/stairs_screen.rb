@@ -7,7 +7,7 @@ class StairsScreen < PM::TableScreen
 
   def table_data
     [{
-      cells: 5.times.map do |idx|
+      cells: 23.times.map do |idx|
         {
           cell_class: Step,
           height: StepStylesheet::STEP_HEIGHT,
