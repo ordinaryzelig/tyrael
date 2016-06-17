@@ -34,10 +34,10 @@ private
     find(tag_name).animate(
       duration: 2,
       animations: -> (q) {
-          q.style do |st|
-            st.opacity = (0..10).to_a.sample * 0.1
-          end
-        }
+        q.style do |st|
+          st.opacity = (0..10).to_a.sample * 0.1
+        end
+      }
     )
   end
 
