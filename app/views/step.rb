@@ -21,7 +21,7 @@ class Step < PM::TableViewCell
   end
 
   def on
-    animate_enlighten
+    animate_enlighten(completion: fade_out)
   end
 
 private
@@ -41,17 +41,18 @@ private
     )
   end
 
-  def animate_enlighten
+  def animate_enlighten(opts)
     leds_from_middle_outward.each_with_index do |leds, idx|
       leds.each do |led|
         led.animate(
-          duration: 0.5,
-          delay: 0.03 * idx,
+          duration: 0.3,
+          delay: 0.1 * idx,
           animations: -> (q) {
             q.style do |st|
               st.opacity = 1
             end
           },
+          completion: opts.fetch(:completion),
         )
       end
     end
@@ -69,35 +70,18 @@ private
       end
   end
 
-end
-
-
-
-__END__
-
-You can use this like so in your table_screen:
-
-  def table_data
-    [
-      {
-        title: "Section",
-        cells: [
-          { cell_class: BarCell, height: stylesheet.bar_cell_height, title: "Foo"},
-          { cell_class: BarCell, height: stylesheet.bar_cell_height, title: "Bar"}
-        ]
-      }
-    ]
+  def fade_out
+    -> (_, led) {
+      led.animate(
+        duration: 1.5,
+        delay: 2,
+        animations: -> (q) {
+          q.style do |st|
+            st.opacity = 0
+          end
+        },
+      )
+    }
   end
 
-
-To style this view include its stylesheet at the top of each controller's
-stylesheet that is going to use it:
-
-  class SomeStylesheet < ApplicationStylesheet
-    include StepStylesheet
-
-Another option is to use your controller's stylesheet to style this view. This
-works well if only one controller uses it. If you do that, delete the
-view's stylesheet with:
-
-  rm app/stylesheets/step_stylesheet.rb
+end
